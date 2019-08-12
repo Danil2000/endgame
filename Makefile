@@ -2,8 +2,10 @@ NAME = endgame
 INC = inc/header.h
 HEADTMP = header.h
 SRCS = src/rand.c \
+	src/init.c \
     
 CTMP = rand.c \
+	init.c \
 	
 OUT = ./src/fsdl.o \
 
