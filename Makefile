@@ -1,34 +1,31 @@
 NAME = endgame
-INC = inc/header.h
-HEADTMP = header.h
-SRCS = src/rand.c \
-	src/init.c \
-	src/draw.c \
-    
-CTMP = rand.c \
 
-	
-OUT = ./src/rand.o \
-	./src/init.o \
-	./src/draw.o \
+SRC = src/*.c
 
-FFLAG1 = -I ./inc/SDL2.framework/Headers \
+INC = inc/*.h
+
+CFILES = *.c
+
+HFILES = *.h
+
+CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic
+
+FFLAGS = -I ./inc/SDL2.framework/Headers \
 	-I ./SDL2_image.framework/Headers \
-
-FFLAG2 = -F ./inc -framework SDL2 -rpath ./inc \
+    -F ./inc -framework SDL2 -rpath ./inc \
 	-F ./inc -framework SDL2_image -rpath ./inc \
 
-all: install uninstall
+
+all: install clean
+
 install:
-	@cp $(SRCS) .
+	@cp $(SRC) .
 	@cp $(INC) .
-	@clang $(CFLAGS) $(FFLAG1) $(FFLAG2) $(DFLAGS) -o $(NAME) $(CTMP)
-uninstall: clean
-	@rm -rf $(CTMP)
-	@rm -rf $(OUT)
-	@rm -rf $(HEADTMP)
+	@clang $(CFLAGS) $(FFLAGS) -o $(NAME) $(CFILES)
 clean:
-	@rm -rf $(CTMP)
-	@rm -rf $(OUT)
-	@rm -rf $(HEADTMP)
-reinstall: clean all
+	@rm -rf $(CFILES)
+	@rm -rf $(HFILES)
+uninstall: clean
+	@rm -rf $(NAME)
+
+reinstall: uninstall all
