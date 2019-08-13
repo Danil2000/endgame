@@ -7,7 +7,7 @@ int randomNumber(int nr_min, int nr_max) {
 		srand(time(NULL));
 	}
 
-	return rand() % nr_max + nr_min; //generate a random number
+	return rand() % nr_max + nr_min;
 }
 
 int randomColor() {
