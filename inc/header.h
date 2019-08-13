@@ -19,7 +19,6 @@ static const int width = 1224;
 const int height = 768; 
 void cleanup(void);
 void initSDL(void);
-SDL_Texture *loadTexture(char *filename);
 void prepareScene(void);
 void presentScene(void);
 
@@ -38,5 +37,6 @@ typedef struct {
 
 App *app;
 Entity *player;
+SDL_Texture *loadTexture(char *filename);
 
 #endif

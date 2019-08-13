@@ -23,12 +23,12 @@ void drawRandomPoints(int nr_points, bool randomizeColor, SDL_Renderer *renderer
 	}
 }
 int main(int argc, char **argv) {
+	App *app = NULL;
+	Entity *player = NULL;
 
-	memset(&app, 0, sizeof(App));
-	memset(&player, 0, sizeof(Entity));
 	player->x = 100;
 	player->y = 100;
-	player->texture = loadTexture("gfx/player.png");
+	player->texture = loadTexture("./images/Michael-Myers.png");
 
 	SDL_Init(SDL_INIT_VIDEO);
 

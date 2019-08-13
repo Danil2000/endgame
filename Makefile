@@ -6,13 +6,13 @@ SRCS = src/rand.c \
 	src/draw.c \
     
 CTMP = rand.c \
-	init.c \
-	draw.c \
+
 	
-OUT = ./src/fsdl.o \
+OUT = ./src/rand.o \
+	./src/init.o \
+	./src/draw.o \
 
 FFLAG1 = -I ./inc/SDL2.framework/Headers \
-	-I ./SDL2_mixer.framework/Headers \
 	-I ./SDL2_image.framework/Headers \
 
 FFLAG2 = -F ./inc -framework SDL2 -rpath ./inc \
