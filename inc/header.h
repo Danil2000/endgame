@@ -15,15 +15,12 @@
 int randomNumber(int nr_min, int nr_max);
 
 static const int width = 1224;
+const int height = 768;
 
-const int height = 768; 
-void cleanup(void);
-void initSDL(void);
-void prepareScene(void);
-void presentScene(void);
+SDL_Texture *loadTexture(char *filename);
 
+void blit(SDL_Texture *texture, int x, int y);
 SDL_Event event;
-//SDL_Texture *loadTexture(char *filename);
 
 typedef struct {
 	SDL_Renderer *renderer;
@@ -36,7 +33,5 @@ typedef struct {
 	SDL_Texture *texture;
 } Entity;
 
-App *app;
-Entity *player;
 
 #endif

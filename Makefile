@@ -4,9 +4,9 @@ SRC = src/*.c
 
 INC = inc/*.h
 
-CFILES = *.c
+CFILES = ./src/*.c
 
-HFILES = *.h
+HFILES = ./inc/*.h
 
 CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic
 
@@ -16,15 +16,11 @@ FFLAGS = -I ./inc/SDL2.framework/Headers \
 	-F ./inc -framework SDL2_image -rpath ./inc \
 
 
-all: install clean
+all: install
 
 install:
-	@cp $(SRC) .
-	@cp $(INC) .
 	@clang $(CFLAGS) $(FFLAGS) -o $(NAME) $(CFILES)
-clean:
-	@rm -rf $(CFILES)
-	@rm -rf $(HFILES)
+
 uninstall: clean
 	@rm -rf $(NAME)
 
