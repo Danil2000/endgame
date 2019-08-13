@@ -23,6 +23,7 @@ void prepareScene(void);
 void presentScene(void);
 
 SDL_Event event;
+//SDL_Texture *loadTexture(char *filename);
 
 typedef struct {
 	SDL_Renderer *renderer;
@@ -37,6 +38,6 @@ typedef struct {
 
 App *app;
 Entity *player;
-SDL_Texture *loadTexture(char *filename);
+
 
 #endif

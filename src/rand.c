@@ -1,5 +1,16 @@
 #include "/Users/dyanchuk/Desktop/ENDGAME/inc/header.h"
 
+SDL_Texture *loadTexture(char *filename)
+{
+ 	SDL_Texture *texture;
+
+ 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s", filename);
+
+ 	texture = IMG_LoadTexture(app->renderer, filename);
+
+ 	return texture;
+}
+
 int randomNumber(int nr_min, int nr_max) {
 	static bool initialized = false;
 	if(!initialized) {
@@ -23,8 +34,8 @@ void drawRandomPoints(int nr_points, bool randomizeColor, SDL_Renderer *renderer
 	}
 }
 int main(int argc, char **argv) {
-	App *app = NULL;
-	Entity *player = NULL;
+	//bzero(app, sizeof(&app));
+	//bzero(player, sizeof(&player));
 
 	player->x = 100;
 	player->y = 100;
