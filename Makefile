@@ -1,29 +1,27 @@
 NAME = endgame
-INC = inc/header.h
-HEADTMP = header.h
-SRCS = src/rand.c \
-    
-CTMP = rand.c \
-	
-OUT = ./src/fsdl.o \
 
-FFLAG1 = -I ./inc/SDL2.framework/Headers \
-	-I ./SDL2_mixer.framework/Headers \
+SRC = src/*.c
 
-FFLAG2 = -F ./inc -framework SDL2 -rpath ./inc \
-	-F ./inc -framework SDL2_mixer -rpath ./inc \
+INC = inc/*.h
 
-all: install uninstall
+CFILES = ./src/*.c
+
+HFILES = ./inc/*.h
+
+CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -fsanitize=address
+
+FFLAGS = -I ./inc/SDL2.framework/Headers \
+	-I ./SDL2_image.framework/Headers \
+    -F ./inc -framework SDL2 -rpath ./inc \
+	-F ./inc -framework SDL2_image -rpath ./inc \
+
+
+all: install
+
 install:
-	@cp $(SRCS) .
-	@cp $(INC) .
-	@clang $(CFLAGS) $(FFLAG1) $(FFLAG2) $(DFLAGS) -o $(NAME) $(CTMP)
+	@clang $(CFLAGS) $(FFLAGS) -o $(NAME) $(CFILES)
+
 uninstall: clean
-	@rm -rf $(CTMP)
-	@rm -rf $(OUT)
-	@rm -rf $(HEADTMP)
-clean:
-	@rm -rf $(CTMP)
-	@rm -rf $(OUT)
-	@rm -rf $(HEADTMP)
-reinstall: clean all
+	@rm -rf $(NAME)
+
+reinstall: uninstall all

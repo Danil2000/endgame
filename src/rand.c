@@ -1,57 +1,74 @@
-#include "/Users/dyanchuk/Desktop/ENDGAME/inc/header.h"
+#include "../inc/header.h"
 
-int randomNumber(int nr_min, int nr_max) {
-	static bool initialized = false;
-	if(!initialized) {
-		initialized = true;
-		srand(time(NULL));
-	}
+int main() {
 
-	return rand() % nr_max + nr_min; //generate a random number
-}
-
-int randomColor() {
-	return randomNumber(0, 255);
-}
-
-void drawRandomPoints(int nr_points, bool randomizeColor, SDL_Renderer *renderer) {
-	for(int i = 0; i < nr_points; i++) {
-		if(randomizeColor) {
-			SDL_SetRenderDrawColor(renderer, randomColor(), randomColor(), randomColor(), 255);
-		}
-		SDL_RenderDrawPoint(renderer, randomNumber(0, width), randomNumber(0, height));
-	}
-}
-int main(int argc, char **argv) {
-
-SDL_Init(SDL_INIT_VIDEO);
-
-SDL_Window *window = SDL_CreateWindow("Chernobyl, SDL2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
-
-SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-bool running = true;
-		while(running) {
-		while(SDL_PollEvent(&event)) {
-			if(event.type == SDL_QUIT) {
-				running = false;
+	SDL_Init(SDL_INIT_EVERYTHING);
+	IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
+	SDL_Window *win = SDL_CreateWindow("Chernobyl", 0, 0, 1024, 1024, SDL_WINDOW_SHOWN);
+	SDL_Surface *surf = SDL_GetWindowSurface(win);
+	SDL_Surface *background = IMG_Load("images/sprites/фон.png");
+	//SDL_ConvertSurface(background, surf->format, 0);
+	bool frback = 0;
+	SDL_Surface *img = IMG_Load("images/sprites/pers.png");
+ 	SDL_Rect pers = {0, 150, 100, 100};
+	
+	while (1)
+	{
+		while (SDL_PollEvent(&event))
+		{
+			if (event.type == SDL_QUIT)
+			{
+				exit(0);
 			}
-		}	
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-		SDL_RenderClear(renderer);
+			if(event.type == SDL_KEYDOWN)
+			{
+				if(event.key.keysym.sym == SDLK_UP){
+					pers.y -= 16;
+				}
+				if(event.key.keysym.sym == SDLK_RIGHT)
+				{
+						pers.x += 16;
+				}
+				if(event.key.keysym.sym == SDLK_LEFT)
+				{
+					pers.x -= 16;
+					free(img);
+						img = IMG_Load("images/sprites/rpers.png");
+						SDL_Rect rpers = {pers.x, pers.y, 100, 100};
+						SDL_BlitSurface(img, NULL, surf, &rpers);
+						frback = 1;
+				}
+				if(frback == 1 && event.key.keysym.sym == SDLK_RIGHT)
+				{
+					free(img);
+						img = IMG_Load("images/sprites/pers.png");
+						SDL_Rect rpers = {pers.x, pers.y, 100, 100};
+						SDL_BlitSurface(img, NULL, surf, &rpers);
+				}
+				if(event.key.keysym.sym == SDLK_DOWN)
+				{
+					pers.y += 16;
+				}
+	
+				if(pers.x > 858)
+				{
+					pers.x -= 16;
+				}
+				if(pers.y > 858)
+				{
+					pers.y -= 16;
+				}
+			}
+		}
 
-		SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255); //Yellow color
-		drawRandomPoints(500, true, renderer);
-
-		SDL_RenderPresent(renderer);
+		//SDL_Rect pers = {1, 150, 100, 100};
+		SDL_Rect fon = {0, 0, 1024, 1024};	
+		SDL_BlitSurface(background, NULL, surf, &fon);	
+		SDL_BlitSurface(img, NULL, surf, &pers);
+		SDL_UpdateWindowSurface(win);
 	}
 
-SDL_DestroyRenderer(renderer);
-SDL_DestroyWindow(window);
-
-SDL_Quit();
-return 0;
+ 	SDL_FreeSurface(img);
+ 	SDL_FreeSurface(background);
+	return 0;
 }
-
-
-
